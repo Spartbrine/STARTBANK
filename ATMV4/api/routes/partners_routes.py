@@ -14,7 +14,6 @@ tabla = 'partners'
 def obtener_socios():
     conexion = conectar_bd()
     cursor = conexion.cursor()
-    cursor.execute('SELECT * FROM partners')
     socios = verTodosDatos(cursor, tabla)   
     conexion.close()
     return socios
@@ -55,7 +54,7 @@ def crear_socios():
 
     return jsonify({'mensaje': mensaje}), status_code
 
-
+#Actualizar
 @partners_bp.route('/socios', methods=['PUT'])
 def actualizar_socio():
     data = request.json
