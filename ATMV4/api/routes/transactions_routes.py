@@ -21,7 +21,7 @@ def obtener_transacciones():
 def obtener_transacciones_id(id):
     conexion = conectar_bd()
     cursor = conexion.cursor()
-    transacciones = verDato(cursor, tabla, id)
+    transacciones = verDato(cursor, tabla,'id', id)
     conexion.close()
     if transacciones:
         return jsonify(transacciones)

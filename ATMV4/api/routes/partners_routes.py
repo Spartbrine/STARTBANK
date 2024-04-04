@@ -24,7 +24,7 @@ def obtener_socios():
 def obtener_socios_id(id):
     conexion = conectar_bd()
     cursor = conexion.cursor()
-    socios = verDato(cursor, tabla, id)
+    socios = verDato(cursor, tabla,'id',id)
     conexion.close()
     if socios:
         return jsonify(socios)

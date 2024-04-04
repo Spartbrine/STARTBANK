@@ -11,31 +11,31 @@ from data.conection import actualizarDatos
 
 #Es de socios, no de servicios de socios xd
 
-tabla = 'partners'
+tabla = 'partnersServices'
 
 #Visualizar
-@partnersServices_bp.route('/socios', methods=['GET'])
-def obtener_socios():
+@partnersServices_bp.route('/pagarservicios', methods=['GET'])
+def obtener_servicios():
     conexion = conectar_bd()
     cursor = conexion.cursor()
-    cursor.execute('SELECT * FROM partners')
-    socios = verTodosDatos(cursor, tabla)   
+    cursor.execute('SELECT * FROM partnersServices')
+    servicios = verTodosDatos(cursor, tabla)   
     conexion.close()
-    return socios
+    return servicios
 
-@partnersServices_bp.route('/socios/<int:id>', methods=['GET'])
-def obtener_socios_id(id):
+@partnersServices_bp.route('/pagarservicios/<int:contract>', methods=['GET'])
+def obtener_servicio_contrato(contract):
     conexion = conectar_bd()
     cursor = conexion.cursor()
-    socios = verDato(cursor, tabla, id)
+    contrato = verDato(cursor, tabla, 'contract', contract)
     conexion.close()
-    if socios:
-        return jsonify(socios)
+    if contrato:
+        return jsonify(contrato)
     else:
         return jsonify({"mensaje": "socio no encontrada"}), 404
 
 #Insertar
-@partnersServices_bp.route('/socios', methods=['POST'])
+@partnersServices_bp.route('/pagarservicios', methods=['POST'])
 def crear_socios():
     data = request.json  
     contacto = data.get('contact')
@@ -60,7 +60,7 @@ def crear_socios():
     return jsonify({'mensaje': mensaje}), status_code
 
 
-@partnersServices_bp.route('/socios', methods=['PUT'])
+@partnersServices_bp.route('/pagarservicios', methods=['PUT'])
 def actualizar_socio():
     data = request.json
     id = data.get('id')
