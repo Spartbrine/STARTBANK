@@ -8,6 +8,9 @@ from data.conection import actualizarDatos5Columnas
 from data.conection import actualizarDatos
 
 
+
+#Es de socios, no de servicios de socios xd
+
 tabla = 'partners'
 
 #Visualizar
