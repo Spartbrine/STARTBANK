@@ -5,7 +5,7 @@ from data.conection import verTodosDatos
 from data.conection import insertarDatos3Columnas
 from data.conection import verDato
 
-from datetime import datetime
+from datetime import date
 tabla = 'transactions'
 
 @transactions_bp.route('/transacciones', methods=['GET'])
@@ -38,7 +38,7 @@ def generar_transaccion():
 
     cursor = conexion.cursor()
 
-    if insertarDatos3Columnas(cursor, tabla, 'id_user', 'dateTransaction', 'typeTransaction', id_usuario, datetime.now(), tipo) == True:
+    if insertarDatos3Columnas(cursor, tabla, 'id_user', 'dateTransaction', 'typeTransaction', id_usuario, date.today(), tipo) == True:
         mensaje = "Los datos fueron insertados correctamente."
         status_code = 200
     else:

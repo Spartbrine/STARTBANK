@@ -6,6 +6,7 @@ from data.conection import verTodosDatos
 from data.conection import insertarDatos5Columnas
 from data.conection import verDato
 from data.conection import actualizarDatos
+from datetime import date
 
 
 
@@ -36,16 +37,16 @@ def obtener_servicio_credito(id):
 @partnersCredits_bp.route('/pagarcreditos', methods=['POST'])
 def crear_servicio():
     data = request.json  
-    cost = data.get('cost')
+    initialDebt = data.get('initialDebt')
     debt = data.get('debt')
     id_user = data.get('id_user')
-    name = data.get('name')
-    typeService = data.get('typeService')
+    startContract = date.today()
+    typeCredit = data.get('typeCredit')
 
     conexion = conectar_bd()
 
     cursor = conexion.cursor()
-    e = insertarDatos5Columnas(cursor, tabla, 'typeService', 'cost', 'debt', 'id_user', 'name', typeService, cost, debt, id_user, name)
+    e = insertarDatos5Columnas(cursor, tabla, 'typeCredit', 'initialDebt', 'debt', 'id_user', 'startContract', typeCredit, initialDebt, debt, id_user, startContract)
     if  e == True:
         mensaje = "Los datos fueron insertados correctamente."
         status_code = 200
@@ -62,22 +63,21 @@ def crear_servicio():
 def actualizar_servicio():
     data = request.json
     id = data.get('id')
-    contract = data.get('contract')
-    cost = data.get('cost')
+    initialDebt = data.get('initialDebt')
     debt = data.get('debt')
     id_user = data.get('id_user')
-    name = data.get('name')
-    typeService = data.get('typeService')
+    startContract = data.get('startContract')
+    typeCredit = data.get('typeCredit')
 
     conexion = conectar_bd()
     cursor = conexion.cursor()
     mensaje = ""
     status_code = 500  # Por defecto, error
     
-    if contract: 
+    if id: 
        
-        if cost:
-            if actualizarDatos(cursor, tabla, 'cost', cost, 'id', id):
+        if initialDebt:
+            if actualizarDatos(cursor, tabla, 'initialDebt', initialDebt, 'id', id):
                 mensaje = "Los datos fueron actualizados correctamente."
                 status_code = 200
             else:
@@ -97,20 +97,20 @@ def actualizar_servicio():
             else:
                 mensaje = "Error: No se pudieron actualizar los datos."
         
-        if name:
-            if actualizarDatos(cursor, tabla, 'name', name, 'id', id):
+        if startContract:
+            if actualizarDatos(cursor, tabla, 'startContract', startContract, 'id', id):
                 mensaje = "Los datos fueron actualizados correctamente."
                 status_code = 200
             else:
                 mensaje = "Error: No se pudieron actualizar los datos."
-        if typeService:
-            if actualizarDatos(cursor, tabla, 'typeService', name, 'id', id):
+        if typeCredit:
+            if actualizarDatos(cursor, tabla, 'typeCredit', typeCredit, 'id', id):
                 mensaje = "Los datos fueron actualizados correctamente."
                 status_code = 200
             else:
                 mensaje = "Error: No se pudieron actualizar los datos."
     else:
-        mensaje = "Error: No se proporcionó un ID de contrato válido."
+        mensaje = "Error: No se proporcionó un ID  válido."
     
     conexion.close()
 

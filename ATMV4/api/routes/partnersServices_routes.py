@@ -105,7 +105,7 @@ def actualizar_servicio():
             else:
                 mensaje = "Error: No se pudieron actualizar los datos."
         if typeService:
-            if actualizarDatos(cursor, tabla, 'typeService', name, 'id', id):
+            if actualizarDatos(cursor, tabla, 'typeService', typeService, 'id', id):
                 mensaje = "Los datos fueron actualizados correctamente."
                 status_code = 200
             else:
