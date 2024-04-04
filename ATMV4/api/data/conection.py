@@ -97,15 +97,15 @@ def insertarDatos6Columnas(cursor, tabla, columna1, columna2, columna3,columna4,
     
 #Actualizar datos
 
-def actualizarDatos(cursor, tabla, columna, nuevo_valor, condicion, valor_condicion):
+def actualizarDatos(cursor, tabla, columna, nuevo_valor, condicion, condicional):
     try:
-        consulta = f"UPDATE {tabla} SET {columna} = ? WHERE {condicion} = ?"
-        cursor.execute(consulta, (nuevo_valor, valor_condicion))
+        consulta = f"UPDATE {tabla} SET {columna} = ? WHERE {condicion} = ?"        
+        cursor.execute(consulta, (nuevo_valor,  condicional))
         cursor.connection.commit()
         if cursor.rowcount > 0:
-            return True
+                return True
         else:
-            return False
+                return False
     except Exception as e:
         print(f"Error al actualizar datos: {e}")
         return False

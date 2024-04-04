@@ -61,59 +61,40 @@ def crear_socios():
 
 
 @partnersServices_bp.route('/pagarservicios', methods=['PUT'])
-def actualizar_socio():
+def actualizar_servicio():
     data = request.json
-    id = data.get('id')
-    contacto = data.get('contact')
-    firstLastName = data.get('firstLastName')
-    location = data.get('location')
+    contract = data.get('contract')
+    cost = data.get('cost')
+    debt = data.get('debt')
+    id_user = data.get('id_user')
     name = data.get('name')
-    secondLastName = data.get('secondLastName')
-    
+    typeService = data.get('typeService')
+
     conexion = conectar_bd()
     cursor = conexion.cursor()
-    mensaje = ""
     status_code = 500  # Por defecto, error
-    
-    if id:  # Aseguramos que haya un ID proporcionado
-        if contacto:
-            if actualizarDatos(cursor, tabla, 'contact', contacto, 'id', id):
-                mensaje = "Los datos fueron actualizados correctamente."
-                status_code = 200
-            else:
-                mensaje = "Error: No se pudieron actualizar los datos."
-        
-        if firstLastName:
-            if actualizarDatos(cursor, tabla, 'firstLastName', firstLastName, 'id', id):
-                mensaje = "Los datos fueron actualizados correctamente."
-                status_code = 200
-            else:
-                mensaje = "Error: No se pudieron actualizar los datos."
-        
-        if location:
-            if actualizarDatos(cursor, tabla, 'location', location, 'id', id):
-                mensaje = "Los datos fueron actualizados correctamente."
-                status_code = 200
-            else:
-                mensaje = "Error: No se pudieron actualizar los datos."
-        
-        if name:
-            if actualizarDatos(cursor, tabla, 'name', name, 'id', id):
-                mensaje = "Los datos fueron actualizados correctamente."
-                status_code = 200
-            else:
-                mensaje = "Error: No se pudieron actualizar los datos."
-        
-        if secondLastName:
-            if actualizarDatos(cursor, tabla, 'secondLastName', secondLastName, 'id', id):
-                mensaje = "Los datos fueron actualizados correctamente."
-                status_code = 200
-            else:
-                mensaje = "Error: No se pudieron actualizar los datos."
-    
-    else:
-        mensaje = "Error: No se proporcionó un ID válido."
-    
-    conexion.close()
+    mensaje = "Error: No se pudieron actualizar los datos."
+
+    if contract:
+        try:
+            if cost:
+                actualizarDatos(cursor, tabla, 'cost', cost, 'contract', contract)
+            if debt:
+                actualizarDatos(cursor, tabla, 'debt', debt, 'contract', contract)
+            if id_user:
+                actualizarDatos(cursor, tabla, 'id_user', id_user, 'contract', contract)
+            if name:
+                actualizarDatos(cursor, tabla, 'name', name, 'contract', contract)
+            if typeService:
+                actualizarDatos(cursor, tabla, 'typeService', typeService, 'contract', contract)
+            
+            conexion.commit()  # Confirmar los cambios en la base de datos
+            mensaje = "Los datos fueron actualizados correctamente."
+            status_code = 200
+        except Exception as e:
+            print(f"Error al actualizar datos: {e}")
+            conexion.rollback()  # Revertir cualquier cambio en caso de error
+        finally:
+            conexion.close()
 
     return jsonify({'mensaje': mensaje}), status_code

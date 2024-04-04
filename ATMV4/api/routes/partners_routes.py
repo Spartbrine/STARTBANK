@@ -4,7 +4,6 @@ from data.conection import conectar_bd
 from data.conection import verTodosDatos
 from data.conection import insertarDatos5Columnas
 from data.conection import verDato
-from data.conection import actualizarDatos5Columnas
 from data.conection import actualizarDatos
 
 
@@ -44,7 +43,7 @@ def crear_socios():
     conexion = conectar_bd()
 
     cursor = conexion.cursor()
-    e = insertarDatos5Columnas(cursor, tabla, 'contact', 'firstLastName', 'location', 'name','secondLastName', contacto, firstLastName, location,name , secondLastName)
+    e = insertarDatos5Columnas(cursor, tabla, 'contact', 'firstLastName', 'location', 'name','secondLastName', contacto, firstLastName, location , name , secondLastName)
     if  e == True:
         mensaje = "Los datos fueron insertados correctamente."
         status_code = 200
@@ -68,48 +67,53 @@ def actualizar_socio():
     secondLastName = data.get('secondLastName')
     
     conexion = conectar_bd()
+
     cursor = conexion.cursor()
-    mensaje = ""
-    status_code = 500  # Por defecto, error
-    
-    if id:  # Aseguramos que haya un ID proporcionado
-        if contacto:
-            if actualizarDatos(cursor, tabla, 'contact', contacto, 'id', id):
-                mensaje = "Los datos fueron actualizados correctamente."
-                status_code = 200
-            else:
-                mensaje = "Error: No se pudieron actualizar los datos."
-        
-        if firstLastName:
-            if actualizarDatos(cursor, tabla, 'firstLastName', firstLastName, 'id', id):
-                mensaje = "Los datos fueron actualizados correctamente."
-                status_code = 200
-            else:
-                mensaje = "Error: No se pudieron actualizar los datos."
-        
-        if location:
-            if actualizarDatos(cursor, tabla, 'location', location, 'id', id):
-                mensaje = "Los datos fueron actualizados correctamente."
-                status_code = 200
-            else:
-                mensaje = "Error: No se pudieron actualizar los datos."
-        
-        if name:
-            if actualizarDatos(cursor, tabla, 'name', name, 'id', id):
-                mensaje = "Los datos fueron actualizados correctamente."
-                status_code = 200
-            else:
-                mensaje = "Error: No se pudieron actualizar los datos."
-        
-        if secondLastName:
-            if actualizarDatos(cursor, tabla, 'secondLastName', secondLastName, 'id', id):
-                mensaje = "Los datos fueron actualizados correctamente."
-                status_code = 200
-            else:
-                mensaje = "Error: No se pudieron actualizar los datos."
-    
-    else:
-        mensaje = "Error: No se proporcionó un ID válido."
+
+    if (contacto):
+        e1 = actualizarDatos(cursor, tabla,'contact', contacto, 'id', id)
+        if  e1 == True:
+            mensaje = "Los datos fueron actualizados correctamente."
+            status_code = 200
+        else:
+            mensaje = "Error: No se pudieron actualizar los datos." 
+            status_code = 500
+    if (firstLastName):
+        e2 = actualizarDatos(cursor, tabla,'firstLastName', firstLastName, 'id', id)
+        if  e2 == True:
+            mensaje = "Los datos fueron actualizados correctamente."
+            status_code = 200
+        else:
+            
+            mensaje = "Error: No se pudieron actualizar los datos." 
+            status_code = 500
+    if (location):
+        e3 = actualizarDatos(cursor, tabla, 'location',location, 'id', id)
+        if  e3 == True:
+            mensaje = "Los datos fueron actualizados correctamente."
+            status_code = 200
+        else:
+            
+            mensaje = "Error: No se pudieron actualizar los datos." 
+            status_code = 500
+    if (name):
+        e4 = actualizarDatos(cursor, tabla, 'name',name, 'id', id)
+        if  e4 == True:
+            mensaje = "Los datos fueron actualizados correctamente."
+            status_code = 200
+        else:
+            
+            mensaje = "Error: No se pudieron actualizar los datos." 
+            status_code = 500
+    if (secondLastName):
+        e= actualizarDatos(cursor, tabla, 'secondLastName',secondLastName, 'id', id)
+        if  e == True:
+            mensaje = "Los datos fueron actualizados correctamente."
+            status_code = 200
+        else:
+            
+            mensaje = "Error: No se pudieron actualizar los datos." 
+            status_code = 500
     
     conexion.close()
 
