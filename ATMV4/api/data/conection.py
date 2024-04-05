@@ -25,6 +25,12 @@ def verTodosDatos(cursor, tabla):
     
     return jsonify(nombresColumnas)
 
+
+def verServicios(cursor, query):
+    cursor.execute(query)
+    nombesColumnas = darNombres(cursor)
+    return nombesColumnas
+
 def verDato(cursor, tabla, condicion,id):
     consulta = f"SELECT * FROM {tabla} WHERE {condicion} = ?"
     cursor.execute(consulta, (id,))
